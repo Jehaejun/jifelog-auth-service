@@ -8,6 +8,9 @@ spec:
     spec:
       containers:
         - name: auth-api
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
           resources:
             requests:
               cpu: "100m"
