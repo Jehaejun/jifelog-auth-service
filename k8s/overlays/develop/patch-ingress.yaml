@@ -6,10 +6,10 @@ spec:
   ingressClassName: public
   tls:
     - hosts:
-        - devauth.jifelog.com
-      secretName: tls-secret
+        - devauth-api.jifelog.com
+      secretName: auth-tls-secret-dev
   rules:
-    - host: devauth.jifelog.com
+    - host: devauth-api.jifelog.com
       http:
         paths:
           - path: /
