@@ -4,5 +4,18 @@ metadata:
   name: auth-api-ingress
 spec:
   ingressClassName: public
-#  rules:
-#    - host: spring-dev.example.com
+  tls:
+    - hosts:
+        - devuth.jifelog.com
+      secretName: tls-secret
+  rules:
+    - host: devauth.jifelog.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-api-service
+                port:
+                  number: 8080
