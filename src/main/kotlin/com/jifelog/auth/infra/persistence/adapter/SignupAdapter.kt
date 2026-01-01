@@ -1,7 +1,7 @@
 package com.jifelog.auth.infra.persistence.adapter
 
-import com.jifelog.auth.application.port.AuthCommandPort
-import com.jifelog.auth.application.port.AuthQueryPort
+import com.jifelog.auth.application.port.SignupCommandPort
+import com.jifelog.auth.application.port.SignupQueryPort
 import com.jifelog.auth.domain.User
 import com.jifelog.auth.infra.persistence.mapper.UserMapper
 import com.jifelog.auth.infra.persistence.mapper.UserPasswordMapper
@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class AuthAdapter(
+class SignupAdapter(
     private val userJapRepository: UserJpaRepository,
     private val userPasswordJpsRepository: UserPasswordJpsRepository
-) : AuthQueryPort, AuthCommandPort {
+) : SignupQueryPort, SignupCommandPort {
     override fun loadUser(id: UUID): User {
         val userEntity = userJapRepository.findById(id)
             .orElseThrow { EntityNotFoundException("No user exists for id $id") }

@@ -2,6 +2,6 @@ package com.jifelog.auth.application.port
 
 import com.jifelog.auth.domain.User
 
-interface AuthCommandPort {
+interface SignupCommandPort {
     fun saveUser(user: User): User
 }

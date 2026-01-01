@@ -1,8 +1,12 @@
 package com.jifelog.auth.presentation
 
-import com.jifelog.auth.application.AuthService
+import com.jifelog.auth.application.SignupService
+import com.jifelog.auth.application.command.ConfirmEmailVerificationCommand
 import com.jifelog.auth.application.command.RegisterUserCommand
+import com.jifelog.auth.application.command.RequestEmailVerificationCommand
+import com.jifelog.auth.presentation.request.SendEmailVerificationRequest
 import com.jifelog.auth.presentation.request.SignupRequest
+import com.jifelog.auth.presentation.request.VerifyEmailRequest
 import com.jifelog.auth.presentation.response.SignupResponse
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -13,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class AuthController(
-    private val authService: AuthService
+class SignupController(
+    private val signupService: SignupService
 ) {
     @PostMapping("/signup")
     fun signup(
@@ -26,7 +30,7 @@ class AuthController(
             request.password
         )
 
-        val result = authService.registerUser(command)
+        val result = signupService.registerUser(command)
 
         return ResponseEntity.ok(
             SignupResponse(
@@ -37,11 +41,34 @@ class AuthController(
         )
     }
 
+    @PostMapping("/signup/email/send")
+    fun sendVerificationEmail(
+        @RequestBody @Valid request: SendEmailVerificationRequest
+    ) {
+        signupService.requestEmailVerification(
+            RequestEmailVerificationCommand(
+                request.email
+            )
+        )
+    }
+
+    @PostMapping("/signup/email/verify")
+    fun verifyEmail(
+        @RequestBody @Valid request: VerifyEmailRequest
+    ) {
+        signupService.confirmEmailVerification(
+            ConfirmEmailVerificationCommand(
+                request.email,
+                request.token
+            )
+        )
+    }
+
     @GetMapping("/test/{id}")
     fun test(
         @PathVariable id: String
     ): ResponseEntity<SignupResponse> {
-        val result = authService.test(id)
+        val result = signupService.test(id)
 
         return ResponseEntity.ok(SignupResponse(result.id!!, result.username, result.createdAt))
     }
