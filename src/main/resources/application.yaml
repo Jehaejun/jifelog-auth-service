@@ -23,3 +23,17 @@ spring:
         highlight_sql: true
         jdbc:
           time_zone: UTC
+
+  data:
+    redis:
+      host: ${jifelog.redis.host}
+      port: 6379
+      password: ${jifelog.redis.password}
+      database: 0
+      timeout: 2s
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 16
+          min-idle: 0
+          max-wait: 1s
