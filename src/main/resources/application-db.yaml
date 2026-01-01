@@ -3,3 +3,6 @@ jifelog:
     url: url
     username: username
     password: password
+  redis:
+    host: host
+    password: password
